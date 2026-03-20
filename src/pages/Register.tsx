@@ -2,7 +2,7 @@ import LinkArrow from "../components/LinkArrow";
 import { Eye, EyeOff } from "lucide-react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { useForm } from "react-hook-form";
+import { useForm, useWatch } from "react-hook-form";
 import { supabase } from "../lib/supabase.ts";
 
 type FormData = {
@@ -16,12 +16,12 @@ export default function Register() {
   const {
     register,
     handleSubmit,
+    control,
     formState: { errors },
-    watch,
     reset,
   } = useForm<FormData>({ mode: "onChange" });
 
-  const password = watch("password", "");
+  const password = useWatch({ control, name: "password", defaultValue: "" });
   const [message, setMessage] = useState("");
   const [isError, setIsError] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
@@ -220,7 +220,7 @@ export default function Register() {
           </Link>
         </p>
       </div>
-      <LinkArrow href="/" />
+      <LinkArrow href="/">Home</LinkArrow>
     </div>
   );
 }
